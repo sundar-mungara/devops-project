@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+    stages {
+        stage('Clone Repo') {
+            steps {
+                git 'https://github.com/sundar-mungara/devops-project.git'
+            }
+        }
+        stage('Build & Push Docker Image') {
+            steps {
+                sh 'docker build -t your-dockerhub-sundarmungar/frontend:latest frontend/'
+                sh 'docker build -t your-dockerhub-sundarmungar/backend:latest backend/'
+                sh 'docker push your-dockerhub-sundarmungar/frontend:latest'
+                sh 'docker push your-dockerhub-sundarmungar/backend:latest'
+            }
+        }
+        stage('Deploy to Kubernetes') {
+            steps {
+                sh 'kubectl apply -f k8s/'
+            }
+        }
+    }
+}
