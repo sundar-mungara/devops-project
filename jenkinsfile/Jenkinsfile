@@ -8,10 +8,10 @@ pipeline {
         }
         stage('Build & Push Docker Image') {
             steps {
-                withCredentials([usernamePassword(credentialsId: '799561935', usernameVariable: 'sundarmungar', passwordVariable: 'Gnan@2601mung')]) {
+                withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'sundarmungar', passwordVariable: 'Gnan@2601mung')]) {
                     sh 'docker build -t sundarmungar/frontend:latest frontend/'
                     sh 'docker build -t sundarmungar/backend:latest backend/'
-                    sh 'echo "$DOCKER_PASSWORD" | docker login -u "sundarmungar" --password-stdin'
+                    sh 'echo "Gnan@2601mung" | docker login -u "sundarmungar" --password-stdin'
                     sh 'docker push sundarmungar/frontend:latest'
                     sh 'docker push sundarmungar/backend:latest'
                 }
